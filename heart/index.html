@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heart made by an equation</title>
+    <script type="text/javascript" src="dygraph-combined.js"></script>
+    <script type="text/javascript">
+      function fn(x) {
+        return [Math.pow((x*x), 0.33333333) + Math.sqrt(1-(x*x)), Math.pow((x*x), 0.33333333) - Math.sqrt(1-(x*x))];
+      }
+
+      function plot() {
+        var graph = document.getElementById("graph_div");
+        var width = parseInt(graph.style.width);
+        var x1 = -1.5;
+        var x2 = 1.5;
+        var xs = 1.0 * (x2 - x1) / width;
+
+        var data = [];
+        for (var i = 0; i < width; i++) {
+          var x = x1 + i * xs;
+          var y = fn(x);
+          var row = [x];
+          if (y.length > 0) {
+            for (var j = 0; j < y.length; j++) {
+              row.push(y[j]);
+            }
+          } else {
+            row.push(y);
+          }
+          data.push(row);
+        }
+
+        g = new Dygraph(graph, data);
+      }
+    </script>
+  </head>
+  <body onload="plot()">
+    <div id="graph_div" style="margin: 50px auto; width:512px; height:400px;"></div>
+  </body>
+</html>
