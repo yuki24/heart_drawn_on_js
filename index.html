@@ -4,20 +4,14 @@
     <title>Heart made by an equation</title>
     <script type="text/javascript" src="dygraph-combined.js"></script>
     <script type="text/javascript">
-      function fn(x) {
-        return [Math.pow((x*x), 0.33333333) + Math.sqrt(1-(x*x)), Math.pow((x*x), 0.33333333) - Math.sqrt(1-(x*x))];
-      }
-
-      function plot() {
-        var graph = document.getElementById("graph_div");
+      function plot(graphArea, fromX, toX, fn) {
+        var graph = document.getElementById(graphArea);
         var width = parseInt(graph.style.width);
-        var x1 = -1.5;
-        var x2 = 1.5;
-        var xs = 1.0 * (x2 - x1) / width;
+        var xs = 1.0 * (toX - fromX) / width;
 
         var data = [];
         for (var i = 0; i < width; i++) {
-          var x = x1 + i * xs;
+          var x = fromX + i * xs;
           var y = fn(x);
           var row = [x];
           if (y.length > 0) {
@@ -34,7 +28,12 @@
       }
     </script>
   </head>
-  <body onload="plot()">
-    <div id="graph_div" style="margin: 50px auto; width:512px; height:400px;"></div>
+  <body>
+    <div id="heartShape" style="margin: 50px auto; width:512px; height:400px;"></div>
+    <script type="text/javascript">
+      plot("heartShape", -1.5, 1.5, function(x){
+        return [Math.pow((x*x), 0.33333333) + Math.sqrt(1-(x*x)), Math.pow((x*x), 0.33333333) - Math.sqrt(1-(x*x))];
+      });
+    </script>
   </body>
 </html>
